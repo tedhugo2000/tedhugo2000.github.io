@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NervEase™ 創新醫材期末報告 (量化版)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 品牌配色與字體 */
+        :root {
+            --primary: #1e40af; /* Deep Blue for rigor */
+            --secondary: #0f172a; /* Navy for headers */
+            --accent: #3b82f6; /* Lighter Blue */
+            --text-dark: #334155;
+            --text-light: #94a3b8;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        /* --- Slide 樣式修正 --- */
+        .slide {
+            /* 改為響應式寬度，最大不超過 1280px */
+            width: 100%;
+            max-width: 1280px;
+            
+            /* 修正：使用 min-height 允許內容長高 */
+            min-height: 720px;
+            height: auto;
+            
+            background: var(--white);
+            position: relative;
+            
+            /* 修正：顯示溢出內容 */
+            overflow: visible; 
+            
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-header {
+            padding: 30px 50px 20px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .slide-title {
+            font-size: 36px;
+            color: var(--secondary);
+            font-weight: 900;
+        }
+
+        .slide-subtitle {
+            font-size: 20px;
+            color: var(--primary);
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .slide-content {
+            padding: 30px 50px;
+            flex: 1;
+        }
+        
+        /* Slide 1: Cover */
+        #slide-title-page {
+            /* 封面頁通常內容固定，可以維持固定高度以保持美觀，但也允許長高 */
+            min-height: 720px;
+            background: linear-gradient(135deg, var(--secondary) 0%, #334155 100%);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        #slide-title-page h1 {
+            font-size: 64px;
+            margin-bottom: 10px;
+            line-height: 1.2; /* 防止標題太長重疊 */
+        }
+        #slide-title-page h2 {
+            font-size: 32px;
+            font-weight: 300;
+            color: #cbd5e1;
+            margin-bottom: 40px;
+        }
+        .footer-info {
+            /* 改為相對定位較安全，避免內容多時覆蓋 */
+            margin-top: auto; 
+            padding-bottom: 40px;
+            font-size: 18px;
+            color: #94a3b8;
+        }
+
+        /* Slide 2: Market Data Grid */
+        .market-data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+            /* 移除 height: 100% */
+            padding-bottom: 20px;
+        }
+        .data-box {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .data-box h3 { font-size: 48px; font-weight: 900; color: var(--primary); margin-bottom: 5px; }
+        .data-box p { font-size: 18px; color: var(--secondary); font-weight: 600; }
+        .data-source { font-size: 14px; color: var(--text-light); margin-top: 10px; }
+
+        /* Slide 3 & 5: Canvas Styles (VPC & BMC) */
+        .canvas-container {
+            display: grid;
+            gap: 15px;
+            /* 修正：移除 height: 100% 以允許內容撐開 */
+            padding-bottom: 20px;
+        }
+        .canvas-item {
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            background: var(--bg-light);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .canvas-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 2px solid var(--accent);
+            color: var(--secondary);
+        }
+        .canvas-content {
+            font-size: 14px;
+            line-height: 1.4;
+            color: var(--text-dark);
+            list-style: none;
+        }
+        .canvas-content li {
+            margin-bottom: 5px;
+            padding-left: 10px;
+            position: relative;
+        }
+        .canvas-content li::before {
+            content: '•';
+            color: var(--primary);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        /* VPC Specific Layout */
+        #vpc-grid {
+            grid-template-columns: 1fr 1fr;
+            /* 修正：改用 min-content 或 auto，讓格子依內容長高，而不是固定比例 */
+            grid-template-rows: auto auto auto; 
+        }
+        #vpc-grid .canvas-title { border-color: var(--primary); }
+
+        /* BMC Specific Layout */
+        #bmc-grid {
+            grid-template-columns: 2fr 3fr 2fr 2fr 2fr;
+            /* 修正：改用 auto，避免文字被切掉 */
+            grid-template-rows: auto auto auto;
+        }
+        /* 定義 Grid 區域 (保持不變) */
+        .bmc-vp { grid-area: 1 / 3 / 3 / 4; background: #dbeafe; border: 2px solid var(--primary); }
+        .bmc-cr { grid-area: 1 / 4 / 2 / 5; }
+        .bmc-ch { grid-area: 2 / 4 / 3 / 5; }
+        .bmc-cs { grid-area: 1 / 5 / 3 / 6; }
+        .bmc-ka { grid-area: 1 / 2 / 2 / 3; }
+        .bmc-kr { grid-area: 2 / 2 / 3 / 3; }
+        .bmc-kp { grid-area: 1 / 1 / 3 / 2; }
+        .bmc-rev { grid-area: 3 / 4 / 4 / 6; }
+        .bmc-cost { grid-area: 3 / 1 / 4 / 3; }
+        
+        .bmc-item { font-size: 12px; }
+        .bmc-item .canvas-title { font-size: 14px; }
+        .bmc-item .canvas-content { font-size: 12px; }
+
+
+        /* Slide 4: Academic Comp Analysis */
+        /* 增加響應式捲動容器，防止表格太寬 */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+        #comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            min-width: 600px; /* 確保表格最小寬度 */
+        }
+        #comp-table th, #comp-table td {
+            border: 1px solid #e2e8f0;
+            padding: 10px 15px;
+            font-size: 14px;
+            text-align: left;
+        }
+        #comp-table th {
+            background: var(--secondary);
+            color: white;
+            font-weight: 600;
+        }
+        .focus-row {
+            background-color: #eff6ff;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .check-icon { color: var(--success); }
+        .cross-icon { color: var(--danger); }
+
+        /* Slide 6: Financials */
+        .financial-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+            /* 移除 height: 100% */
+        }
+        .forecast-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .forecast-table th, .forecast-table td {
+            border: 1px solid #e2e8f0;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        .forecast-table th { background: var(--primary); color: white; }
+        .forecast-table .metric { text-align: left; font-weight: 600; }
+
+        .tam-sam-som-box {
+            background: #eef2ff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .tam-sam-som-box h4 { font-size: 24px; color: var(--secondary); margin-bottom: 15px; }
+        .t-s-s-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #c7d2fe;
+        }
+        .t-s-s-item:last-child { border-bottom: none; }
+        .t-s-s-label { font-weight: 600; color: var(--primary); }
+        .t-s-s-value { font-weight: 700; color: var(--secondary); }
+
+        /* Slide 7: Regulatory & Cost */
+        .reg-cost-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            /* 修正：移除 height: 100% */
+        }
+
+        .reg-path, .cost-struct {
+            border: 1px solid #cbd5e1;
+            padding: 20px;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .reg-path h3, .cost-struct h3 {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+        
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e2e8f0;
+            font-size: 16px;
+        }
+        .cost-label { color: var(--text-dark); }
+        .cost-percentage { font-weight: 700; color: var(--secondary); }
+
+        /* 手機版/小螢幕適配 */
+        @media (max-width: 900px) {
+            .slide { width: 100%; padding: 0; }
+            .slide-title { font-size: 28px; }
+            #slide-title-page h1 { font-size: 42px; }
+            
+            /* 將複雜的 Canvas Grid 轉為單欄顯示 */
+            #vpc-grid, #bmc-grid, .reg-cost-grid, .financial-grid, .market-data-grid {
+                display: flex;
+                flex-direction: column;
+            }
+            .canvas-item, .reg-path, .cost-struct, .data-box, .tam-sam-som-box, .forecast-section {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            /* 修正手機版上的 BMC grid-area 失效問題 */
+            .bmc-vp, .bmc-cr, .bmc-ch, .bmc-cs, .bmc-ka, .bmc-kr, .bmc-kp, .bmc-rev, .bmc-cost {
+                grid-area: auto; 
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="slide">
+    <div class="slide-header">
+        <div class="slide-title">Market Opportunity & Need Statement (量化佐證)</div>
+        <div class="slide-subtitle">證明問題規模與創新必要性</div>
+    </div>
+    <div class="slide-content">
+        <div class="market-data-grid">
+            <div>
+                <div class="data-box">
+                    <h3>32.5 M</h3>
+                    <p>美國慢性關節炎患者數量 (核心客群)</p>
+                    <div class="data-source">
+                        <i class="fa-solid fa-database"></i> 數據來源：美國疾病管制與預防中心 (CDC)。
+                    </div>
+                </div>
+                <div class="data-box" style="margin-top: 20px;">
+                    <h3>$9.2 B</h3>
+                    <p>全球疼痛管理設備市場規模 (2032年度)</p>
+                    <div class="data-source">
+                        <i class="fa-solid fa-chart-line"></i> 數據來源：Grand View Research / Fortune Business Insights 報告。
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 24px; color: var(--secondary); font-weight: 700; margin-bottom: 20px;">
+                    創新需求陳述 (Need Statement)
+                </div>
+                <p style="font-size: 20px; color: var(--text-dark); background: #f0f9ff; padding: 20px; border-radius: 8px; border-left: 5px solid var(--accent); margin-bottom: 30px;">
+                    「一種緩解骨關節炎引起的肢體關節疼痛，以減少對藥物依賴的方法。」
+                </p>
+                <div style="font-size: 28px; color: var(--primary); font-weight: 700; margin-bottom: 15px;">
+                    年增長率 CAGR 7.5%
+                </div>
+                <div style="font-size: 16px; color: var(--text-dark); font-weight: 600;">
+                    <i class="fa-solid fa-arrow-up"></i> 市場持續擴大，但現有解決方案（藥物、單模設備）仍有巨大痛點。
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="slide-header">
+        <div class="slide-title">Value Proposition Canvas (VPC)</div>
+        <div class="slide-subtitle">驗證產品與客戶需求的精準匹配 (Fit)</div>
+    </div>
+    <div class="slide-content">
+        <div class="canvas-container" id="vpc-grid">
+            <div class="canvas-item" style="grid-row: 1 / 3;">
+                <div class="canvas-title">獲益創造者 (Gain Creators) <i class="fa-solid fa-lightbulb" style="color: var(--primary);"></i></div>
+                <ul class="canvas-content">
+                    <li>數據化依從性：App 可視化趨勢，增強患者信心。</li>
+                    <li>安全門檻：非藥物，消除藥物副作用疑慮。</li>
+                    <li>價格甜蜜點：定價 < 純 PBM 設備，提高可負擔性。</li>
+                </ul>
+            </div>
+            <div class="canvas-item bmc-vp" style="grid-row: 1 / 3; background: #dbeafe; border: 2px solid var(--primary); justify-content: center; align-items: center; text-align: center;">
+                <div style="font-size: 24px; font-weight: 900; color: var(--primary);">核心價值主張</div>
+                <div style="font-size: 16px; color: var(--secondary); margin-top: 10px;">快速起效 + 持久修復</div>
+                <div style="font-size: 48px; margin-top: 15px; color: var(--primary);">
+                    <i class="fa-solid fa-arrows-left-right"></i>
+                </div>
+            </div>
+            <div class="canvas-item" style="grid-row: 3 / 4;">
+                <div class="canvas-title">痛點緩解者 (Pain Relievers) <i class="fa-solid fa-prescription-bottle-alt" style="color: var(--primary);"></i></div>
+                <ul class="canvas-content">
+                    <li>即時緩解：TENS 模組消除「無感」痛點。</li>
+                    <li>穿戴設計：消除外出不便/門診治療的痛點。</li>
+                </ul>
+            </div>
+             <div class="canvas-item" style="grid-row: 3 / 4;">
+                <div class="canvas-title">產品與服務 (Products & Services) <i class="fa-solid fa-box" style="color: var(--primary);"></i></div>
+                <ul class="canvas-content">
+                    <li>TENS/PBM 雙模硬體</li>
+                    <li>專用導電貼片 (耗材)</li>
+                    <li>RePose™ App (數據紀錄)</li>
+                </ul>
+            </div>
+            
+            <div class="canvas-item" style="grid-row: 1 / 2;">
+                <div class="canvas-title">客戶工作 (Customer Jobs) <i class="fa-solid fa-user-gear" style="color: var(--secondary);"></i></div>
+                <ul class="canvas-content">
+                    <li>核心：緩解慢性關節疼痛。</li>
+                    <li>附帶：維持日常活動能力、避免藥物副作用。</li>
+                </ul>
+            </div>
+            <div class="canvas-item" style="grid-row: 2 / 3;">
+                <div class="canvas-title">客戶痛點 (Customer Pains) <i class="fa-solid fa-xmark-circle" style="color: var(--danger);"></i></div>
+                <ul class="canvas-content">
+                    <li>TENS 效果太短暫。</li>
+                    <li>純 PBM 設備價格昂貴。</li>
+                    <li>對止痛藥的副作用恐懼。</li>
+                </ul>
+            </div>
+            <div class="canvas-item" style="grid-row: 3 / 4;">
+                <div class="canvas-title">客戶獲益 (Customer Gains) <i class="fa-solid fa-plus-circle" style="color: var(--success);"></i></div>
+                <ul class="canvas-content">
+                    <li>可量化：疼痛等級 (VAS) 下降。</li>
+                    <li>功能性：活動度恢復。</li>
+                    <li>情感性：治療過程安心、自主可控。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="slide-header">
+        <div class="slide-title">Competitive Analysis (Academic Dimension)</div>
+        <div class="slide-subtitle">技術成熟度、法規路徑與功能深度比較</div>
+    </div>
+    <div class="slide-content">
+        <div class="table-responsive">
+            <table id="comp-table">
+                <thead>
+                    <tr>
+                        <th>產品/維度</th>
+                        <th>NervEase™ (目標)</th>
+                        <th>純 TENS (e.g., Omron)</th>
+                        <th>純 PBM (e.g., Kineon)</th>
+                        <th>藥物 (e.g., NSAIDs)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="focus-row">
+                        <td>核心機制</td>
+                        <td>TENS + PBM (協同)</td>
+                        <td>TENS (電刺激)</td>
+                        <td>PBM (紅外光療)</td>
+                        <td>化學抑制</td>
+                    </tr>
+                    <tr>
+                        <td>銷售價格 (參考)</td>
+                        <td>$199 - $249</td>
+                        <td>$50 - $100</td>
+                        <td>$500 - $700</td>
+                        <td>(N/A)</td>
+                    </tr>
+                    <tr>
+                        <td>起效速度</td>
+                        <td><span class="check-icon">✓</span> 快速 (5 mins)</td>
+                        <td><span class="check-icon">✓</span> 快速 (即時)</td>
+                        <td><span class="cross-icon">✗</span> 緩慢 (數週累積)</td>
+                        <td><span class="check-icon">✓</span> 快速</td>
+                    </tr>
+                    <tr>
+                        <td>修復/抗炎性</td>
+                        <td><span class="check-icon">✓</span> 高</td>
+                        <td><span class="cross-icon">✗</span> 無</td>
+                        <td><span class="check-icon">✓</span> 高</td>
+                        <td><span class="cross-icon">✗</span> 低 (治標)</td>
+                    </tr>
+                    <tr>
+                        <td>FDA 分類 (路徑)</td>
+                        <td>Class II (510(k))</td>
+                        <td>Class II (510(k))</td>
+                        <td>Class I 或 II (510(k) 或 De Novo)</td>
+                        <td>NDA/ANDA</td>
+                    </tr>
+                    <tr>
+                        <td>專利壁壘</td>
+                        <td>雙模同步控制演算法</td>
+                        <td>已公開/技術成熟</td>
+                        <td>結構設計/波長組合</td>
+                        <td>化合物專利 (到期)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="margin-top: 20px; font-size: 16px; color: var(--text-dark);">
+            <i class="fa-solid fa-cogs" style="color: var(--secondary);"></i> 結論： NervEase™ 在功能性上填補了市場空白，定價策略則鎖定在價值與可負擔性的平衡點。
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="slide-header">
+        <div class="slide-title">Business Model Canvas (BMC)</div>
+        <div class="slide-subtitle">九大區塊結構化分析</div>
+    </div>
+    <div class="slide-content">
+        <div class="canvas-container" id="bmc-grid">
+            <div class="canvas-item bmc-kp">
+                <div class="canvas-title">關鍵合作夥伴 (Key Partners)</div>
+                <ul class="canvas-content">
+                    <li>專業醫材製造商 (ISO 13485)</li>
+                    <li>FDA 法規顧問/CRO (臨床研究機構)</li>
+                    <li>物理治療師 (PT) 網絡</li>
+                </ul>
+            </div>
+            <div class="canvas-item bmc-ka">
+                <div class="canvas-title">關鍵活動 (Key Activities)</div>
+                <ul class="canvas-content">
+                    <li>法規文件提交 (510k)</li>
+                    <li>雙模控制演算法優化</li>
+                    <li>App 數據分析與迭代</li>
+                </ul>
+            </div>
+            <div class="canvas-item bmc-vp">
+                <div class="canvas-title" style="border-color: var(--primary);">核心價值主張 (Value Proposition)</div>
+                <ul class="canvas-content">
+                    <li>即時止痛 + 長效修復</li>
+                    <li>非藥物、居家自主管理</li>
+                    <li>老年友善、高依從性</li>
+                </ul>
+            </div>
+            <div class="canvas-item bmc-cr">
+                <div class="canvas-title">客戶關係 (Customer Relationships)</div>
+                <ul class="canvas-content">
+                    <li>數據驅動的個人化指導</li>
+                    <li>耗材自動化補給</li>
+                    <li>線上客戶支持</li>
+                </ul>
+            </div>
+            <div class="canvas-item bmc-cs">
+                <div class="canvas-title">目標客戶群 (Customer Segments)</div>
+                <ul class="canvas-content">
+                    <li>骨關節炎 (OA) 患者 (45+)</li>
+                    <li>藥物副作用敏感族群</li>
+                    <li>積極尋求居家復健者</li>
+                </ul>
+            </div>
+            <div class="canvas-item bmc-kr">
+                <div class="canvas-title">關鍵資源 (Key Resources)</div>
+                <ul class="canvas-content">
+                    <li>雙模控制演算法專利</li>
+                    <li>FDA 認證文件</li>
+                    <li>App 數據庫 (RWE)</li>
+                </ul>
+            </div>
+            <div class="canvas-item bmc-ch">
+                <div class="canvas-title">通路通路 (Channels)</div>
+                <ul class="canvas-content">
+                    <li>DTC (官網/Amazon)</li>
+                    <li>HSA/FSA 支付資格</li>
+                    <li>PT 診所推薦 (B2B2C)</li>
+                </ul>
+            </div>
+            <div class="canvas-item bmc-cost">
+                <div class="canvas-title">成本結構 (Cost Structure)</div>
+                <ul class="canvas-content">
+                    <li>R&D (30%)：法規、測試、原型</li>
+                    <li>BOM (25%)：硬體物料成本</li>
+                    <li>SG&A (30%)：行銷、銷售費用</li>
+                </ul>
+            </div>
+            <div class="canvas-item bmc-rev">
+                <div class="canvas-title">收入流 (Revenue Streams)</div>
+                <ul class="canvas-content">
+                    <li>硬體銷售 (\$199 - $249)</li>
+                    <li>耗材銷售 (經常性收入)</li>
+                    <li>App Premium 訂閱 (數據服務)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="slide-header">
+        <div class="slide-title">Quantitative Financial Analysis & Feasibility</div>
+        <div class="slide-subtitle">五-年收入預測與成本結構論證</div>
+    </div>
+    <div class="slide-content">
+        <div class="financial-grid">
+            <div class="forecast-section">
+                <h3 style="font-size: 22px; color: var(--primary); margin-bottom: 15px;">5 年財務預測假設與結果</h3>
+                <table class="forecast-table">
+                    <thead>
+                        <tr>
+                            <th class="metric">指標</th>
+                            <th>Year 1 (上市準備)</th>
+                            <th>Year 3 (成長期)</th>
+                            <th>Year 5 (穩定期)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="metric">年度銷售量 (Unit)</td>
+                            <td>3,000</td>
+                            <td>35,000</td>
+                            <td>120,000</td>
+                        </tr>
+                        <tr>
+                            <td class="metric">總收入 (M USD)</td>
+                            <td style="background: #e6e9f8;">$0.6 M</td>
+                            <td style="background: #e6e9f8;">$7.8 M</td>
+                            <td style="background: #e6e9f8;">$26.4 M</td>
+                        </tr>
+                        <tr>
+                            <td class="metric">硬體毛利 (Gross Margin)</td>
+                            <td>60%</td>
+                            <td>65%</td>
+                            <td>70%</td>
+                        </tr>
+                        <tr>
+                            <td class="metric">市場滲透率 (SOM/%)</td>
+                            <td>< 0.1%</td>
+                            <td>0.8%</td>
+                            <td>2.7%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 14px; color: var(--text-light); margin-top: 15px;">
+                    *假設：平均售價 $220。 Year 1 收入主要來自初期測試與小批量銷售。Year 5 滲透率低於 3%，屬於合理保守估計。
+                </p>
+            </div>
+
+            <div class="tam-sam-som-box">
+                <h4>市場規模定義與目標</h4>
+                <div class="t-s-s-item">
+                    <span class="t-s-s-label">TAM (潛在市場)</span>
+                    <span class="t-s-s-value">$9.2 Billion</span>
+                </div>
+                <div class="t-s-s-item">
+                    <span class="t-s-s-label">SAM (服務市場)</span>
+                    <span class="t-s-s-value">$4.5 Billion</span>
+                </div>
+                <div class="t-s-s-item">
+                    <span class="t-s-s-label">SOM (可獲市場 - 5年)</span>
+                    <span class="t-s-s-value">$1.2 Billion</span>
+                </div>
+                <p style="font-size: 14px; color: var(--text-light); margin-top: 20px;">
+                    SAM 定義： 排除手術、僅計算非藥物、居家疼痛管理設備市場。
+                </p>
+                <div style="margin-top: 15px; font-weight: 700; color: var(--secondary);">
+                    結論：市場空間巨大，即使保守滲透 (2.7%) 亦可創造可觀收入。
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="slide-header">
+        <div class="slide-title">Regulatory Pathway & Detailed Cost Structure</div>
+        <div class="slide-subtitle">醫材進入門檻與初期資本配置</div>
+    </div>
+    <div class="slide-content">
+        <div class="reg-cost-grid">
+            <div class="reg-path">
+                <h3>法規路徑論述 (FDA 510(k))</h3>
+                <p style="font-size: 16px; margin-bottom: 15px;">
+                    目標分類： 美國 FDA Class II 醫療器材。
+                </p>
+                <ul class="canvas-content" style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;">
+                        <i class="fa-solid fa-flask-vial" style="color: var(--primary);"></i> 路徑選擇： 510(k) 上市前通知。
+                        <p style="font-size: 14px; color: var(--text-light); margin-top: 5px;">*理由：市場已有 TENS 和 PBM 的合法產品 (Predicate Devices)，可證明實質等同性 (Substantial Equivalence)。*</p>
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <i class="fa-solid fa-shield-alt" style="color: var(--primary);"></i> 核心挑戰： 需進行生物相容性測試及證明電氣安全與電磁相容性 (EMC)。
+                        <p style="font-size: 14px; color: var(--text-light); margin-top: 5px;">*特別是雙模同步輸出的安全性，必須嚴格佐證。*</p>
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <i class="fa-solid fa-gavel" style="color: var(--primary);"></i> 專利策略： 申請方法論專利 (雙模同步控制邏輯)，建立技術壁壘。
+                    </li>
+                </ul>
+            </div>
+
+            <div class="cost-struct">
+                <h3>初期資本配置百分比 (Year 1 - Year 3)</h3>
+                <p style="font-size: 16px; margin-bottom: 15px;">
+                    醫材新創的成本高度集中於前期投入。
+                </p>
+                <div class="cost-item">
+                    <span class="cost-label">R&D & 原型開發 (含 IP)</span>
+                    <span class="cost-percentage">30%</span>
+                </div>
+                <div class="cost-item">
+                    <span class="cost-label">法規與認證費用 (510k, 測試)</span>
+                    <span class="cost-percentage">15%</span>
+                </div>
+                <div class="cost-item">
+                    <span class="cost-label">供應鏈建立與初期備料 (BOM)</span>
+                    <span class="cost-percentage">25%</span>
+                </div>
+                <div class="cost-item">
+                    <span class="cost-label">SG&A (行銷、銷售、管理)</span>
+                    <span class="cost-percentage">30%</span>
+                </div>
+                <div style="margin-top: 15px; background: #fef2f2; padding: 10px; border-radius: 4px;">
+                    <strong style="color: var(--danger);">論證重點：</strong> R&D 與法規成本佔比 45%，證明這是**技術和法規密集型**的創新，需要大量前期資本。
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
