@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NervEase™ - Investor Pitch Deck</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0284c7; /* Brand Blue */
+            --secondary: #0f172a; /* Dark Navy */
+            --accent: #38bdf8; /* Light Blue */
+            --text-dark: #334155;
+            --text-light: #94a3b8;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        /* --- 修改後的 Slide 樣式 --- */
+        .slide {
+            /* 基礎寬度設定為 1280px，但允許在小螢幕縮小 */
+            width: 100%;
+            max-width: 1280px;
+            
+            /* 重點修正：改用 min-height，讓內容過多時可以自動長高 */
+            min-height: 720px;
+            height: auto; 
+            
+            background: var(--white);
+            position: relative;
+            
+            /* 重點修正：移除 hidden，讓內容顯示 */
+            overflow: visible; 
+            
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            border-radius: 8px; /* 稍微加一點圓角比較美觀 */
+        }
+
+        .slide-header {
+            padding: 40px 60px 20px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .slide-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 48px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .slide-subtitle {
+            font-size: 24px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .slide-content {
+            padding: 40px 60px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 1. Title Slide */
+        #slide-title-page {
+            /* 封面頁保持固定高度比較好看，若內容不多 */
+            height: 720px; 
+            background: linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        #slide-title-page h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 96px;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #slide-title-page h2 {
+            font-size: 36px;
+            font-weight: 300;
+            color: #cbd5e1;
+            margin-bottom: 60px;
+        }
+
+        .tagline-box {
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 20px 40px;
+            border-radius: 50px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        /* 2. Problem Slide */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            /* 移除 height: 100% 避免強制拉伸 */
+        }
+
+        .pain-point {
+            background: #fff1f2;
+            border-left: 6px solid #e11d48;
+            padding: 30px;
+            border-radius: 8px;
+        }
+        
+        .pain-point h3 { color: #be123c; margin-bottom: 15px; font-size: 28px; font-family: 'Oswald', sans-serif;}
+        .pain-point p { font-size: 20px; line-height: 1.5; color: var(--text-dark); }
+
+        .gap-highlight {
+            grid-column: 1 / -1;
+            background: #f0f9ff;
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px; /* 增加間距 */
+        }
+        .gap-highlight h2 { font-size: 32px; color: var(--primary); font-family: 'Oswald', sans-serif; }
+
+        /* 3. Market Size Slide */
+        .market-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            flex-wrap: wrap; /* 允許換行 */
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-light);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            flex: 1; /* 改為 flex 讓他自適應 */
+            min-width: 250px;
+            border-top: 6px solid var(--primary);
+        }
+
+        .stat-number {
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--secondary);
+            font-family: 'Oswald', sans-serif;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label { font-size: 20px; color: var(--text-dark); font-weight: 600; }
+        .stat-desc { font-size: 16px; color: var(--text-light); margin-top: 10px; }
+
+        /* 4. Solution Slide */
+        .solution-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .feature-box {
+            margin-bottom: 30px;
+            padding-left: 20px;
+            border-left: 4px solid var(--primary);
+        }
+        .feature-box h3 { font-size: 28px; color: var(--secondary); margin-bottom: 5px; }
+        .feature-box p { font-size: 18px; color: var(--text-dark); }
+
+        /* 5. Competitive Matrix Slide */
+        /* 這裡需要特別處理，因為原本是寫死的像素定位 */
+        .matrix-wrapper {
+            width: 100%;
+            overflow-x: auto; /* 如果螢幕太小，矩陣圖可以左右滑動 */
+            display: flex;
+            justify-content: center;
+            padding-bottom: 20px;
+        }
+
+        .matrix-container {
+            position: relative;
+            width: 800px;
+            min-width: 800px; /* 強制保持矩陣比例 */
+            height: 500px;
+            margin: 0 auto;
+            border-left: 4px solid #94a3b8;
+            border-bottom: 4px solid #94a3b8;
+            background-image: 
+                linear-gradient(rgba(226, 232, 240, 0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(226, 232, 240, 0.5) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .axis-label {
+            position: absolute;
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        .axis-y-top { top: -30px; left: -60px; }
+        .axis-y-bottom { bottom: -30px; left: -60px; }
+        .axis-x-left { bottom: -40px; left: 0; }
+        .axis-x-right { bottom: -40px; right: 0; }
+
+        .competitor-dot {
+            position: absolute;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: white;
+            border: 2px solid #cbd5e1;
+            font-weight: 600;
+            color: #64748b;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transform: translate(-50%, 50%);
+            white-space: nowrap;
+        }
+
+        .nervease-dot {
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-size: 24px;
+            padding: 15px 30px;
+            z-index: 10;
+            box-shadow: 0 10px 20px rgba(2, 132, 199, 0.4);
+        }
+
+        .quadrant-label {
+            position: absolute;
+            font-size: 36px;
+            font-weight: 900;
+            color: rgba(15, 23, 42, 0.05);
+            text-transform: uppercase;
+            z-index: 0;
+        }
+
+        /* 6. Business Model Slide */
+        .model-cards {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap; /* 允許換行 */
+        }
+
+        .model-card {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .model-card.highlight {
+            border: 2px solid var(--primary);
+            background: #f0f9ff;
+        }
+
+        .model-icon { font-size: 48px; color: var(--primary); margin-bottom: 20px; }
+        .model-price { font-size: 42px; font-weight: 700; color: var(--secondary); margin: 10px 0; font-family: 'Oswald', sans-serif;}
+        .model-desc { color: var(--text-dark); font-size: 16px; line-height: 1.5; }
+        .margin-badge { 
+            background: #dbeafe; color: #1e40af; padding: 4px 12px; 
+            border-radius: 4px; font-weight: 700; display: inline-block; margin-top: 10px; 
+        }
+
+        /* 7. Appendix Slide */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .appendix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            min-width: 600px; /* 確保表格不會太擠 */
+        }
+        .appendix-table th { background: var(--secondary); color: white; padding: 15px; text-align: left;}
+        .appendix-table td { border-bottom: 1px solid #e2e8f0; padding: 15px; color: var(--text-dark); }
+        
+        /* 手機版適配 (Optional) */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .slide { width: 100%; }
+            .slide-title { font-size: 32px; }
+            .solution-layout, .problem-grid { grid-template-columns: 1fr; }
+            .stat-card { width: 100%; }
+            #slide-title-page h1 { font-size: 64px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slide" id="slide-title-page">
+    <div style="z-index: 2; padding: 20px;">
+        <h1>NervEase™</h1>
+        <h2>The Future of Non-Pharmacological Pain Management</h2>
+        
+        <div class="tagline-box">
+            <h3 style="font-size: 28px; font-weight: 400;">The Speed of TENS. The Healing of Light. One Device.</h3>
+        </div>
+        
+        <div style="margin-top: 60px; font-size: 18px; opacity: 0.8;">
+            Investor Presentation | December 2025
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="slide-header">
+        <div class="slide-title">The Patient Dilemma</div>
+        <div class="slide-subtitle">Current solutions force patients to compromise.</div>
+    </div>
+    <div class="slide-content">
+        <div style="margin-bottom: 20px; font-size: 18px; color: var(--text-dark);">
+            Patients don’t abandon care because it doesn’t work — they abandon it because it doesn’t work <strong>when they need it</strong>.
+        </div>
+        <div class="problem-grid">
+            <div class="pain-point">
+                <h3><i class="fa-solid fa-pills"></i> Medication Risks</h3>
+                <p>NSAIDs and Opioids carry severe risks of addiction, stomach ulcers, and kidney damage. Patients are desperate to "get off the pills."</p>
+            </div>
+            <div class="pain-point" style="background: #fff7ed; border-color: #ea580c;">
+                <h3 style="color: #c2410c;"><i class="fa-solid fa-bolt"></i> TENS Limitations</h3>
+                <p>Traditional TENS devices (like Omron) stop working the moment you turn them off. They mask pain but don't treat the tissue.</p>
+            </div>
+            <div class="pain-point" style="background: #eff6ff; border-color: #3b82f6;">
+                <h3 style="color: #1d4ed8;"><i class="fa-regular fa-clock"></i> PBM Slowness</h3>
+                <p>Light therapy (PBM) heals, but takes weeks to show results. Patients lose patience and abandon the treatment due to lack of immediate feedback.</p>
+            </div>
+            <div class="pain-point gap-highlight" style="grid-column: 1 / -1; margin-bottom: 20px;">
+                <h2>The Gap: Patients need <span style="text-decoration: underline;">Instant Relief</span> AND <span style="text-decoration: underline;">Long-term Healing</span>.</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="slide-header">
+        <div class="slide-title">Market Opportunity</div>
+        <div class="slide-subtitle">A massive, growing need for non-drug alternatives.</div>
+    </div>
+    <div class="slide-content">
+        <div class="market-stats">
+            <div class="stat-card">
+                <span class="stat-number">32.5M</span>
+                <span class="stat-label">US Adults with OA</span>
+                <p class="stat-desc">Osteoarthritis is the leading cause of disability in the US (CDC Data).</p>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">$9.2B</span>
+                <span class="stat-label">Pain Management Devices TAM</span>
+                <p class="stat-desc">Total Addressable Market projected by 2030, driven by aging population.</p>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">7.5%</span>
+                <span class="stat-label">CAGR Growth</span>
+                <p class="stat-desc">Strong consistent growth in non-invasive medical device sector.</p>
+            </div>
+        </div>
+        <div style="margin-top: 40px; background: #f0fdf4; padding: 20px; border-radius: 8px; border: 1px solid #bbf7d0;">
+            <strong style="color: #166534;">Strategic Insight:</strong> Regulatory and societal pressure on opioid use is accelerating adoption of HSA/FSA-eligible, home-use non-drug devices—creating a strong tailwind for NervEase.
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="slide-header">
+        <div class="slide-title">Introducing NervEase™</div>
+        <div class="slide-subtitle">Dual-Mode Synergy: TENS + PBM</div>
+    </div>
+    <div class="slide-content">
+        <div class="solution-layout">
+            <div>
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/6647232216485408305" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" alt="NervEase Concept">
+            </div>
+            <div>
+                <div class="feature-box">
+                    <h3>1. Instant Relief (TENS)</h3>
+                    <p>Blocks pain signals within minutes (under 5 mins), creating immediate user trust and reducing early abandonment.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>2. Sustained Healing (PBM)</h3>
+                    <p>850nm Near-Infrared Light increases microcirculation and reduces inflammation, extending relief for hours after use.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>3. Smart Usability</h3>
+                    <p>Wearable design, rechargeable battery, and App tracking for personalized pain management.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="slide-header">
+        <div class="slide-title">Competitive Positioning</div>
+        <div class="slide-subtitle">Dominating the "Fast & Restorative" Quadrant</div>
+    </div>
+    <div class="slide-content">
+        <div class="matrix-wrapper">
+            <div class="matrix-container">
+                <div class="axis-label axis-y-top">Restorative / Healing</div>
+                <div class="axis-label axis-y-bottom">Temporary / Masking</div>
+                <div class="axis-label axis-x-left">Slow Onset</div>
+                <div class="axis-label axis-x-right">Fast Onset</div>
+
+                <div class="quadrant-label" style="top: 20px; left: 20px;">Niche PBM</div>
+                <div class="quadrant-label" style="top: 20px; right: 20px; color: rgba(2, 132, 199, 0.1);">Winning Zone</div>
+                <div class="quadrant-label" style="bottom: 20px; right: 20px;">Red Ocean</div>
+
+                <div class="competitor-dot" style="top: 20%; left: 20%;">Kineon</div>
+                <div class="competitor-dot" style="top: 30%; left: 15%;">NovaaLab</div>
+                <div class="competitor-dot" style="top: 15%; left: 35%;">OSKA Pulse</div>
+
+                <div class="competitor-dot" style="top: 80%; left: 80%;">Omron</div>
+                <div class="competitor-dot" style="top: 70%; left: 75%;">iReliev</div>
+                <div class="competitor-dot" style="top: 85%; left: 65%;">Aleve</div>
+
+                 <div class="competitor-dot" style="top: 80%; left: 20%;">Heat Patches</div>
+
+                <div class="competitor-dot nervease-dot" style="top: 15%; right: 10%;">
+                    NervEase™
+                    <div style="font-size: 12px; font-weight: 400; margin-top: 5px;">Dual-Mode</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="slide-header">
+        <div class="slide-title">Business Model</div>
+        <div class="slide-subtitle">Hardware Entry with Recurring Revenue Tail</div>
+    </div>
+    <div class="slide-content">
+        <div class="model-cards">
+            <div class="model-card highlight">
+                <i class="fa-solid fa-microchip model-icon"></i>
+                <h3>Hardware Sales</h3>
+                <div class="model-price">$199 - $249</div>
+                <p class="model-desc">Medical-grade device positioned at mass-market accessibility.</p>
+                <div class="margin-badge">Target Margin: 70%</div>
+            </div>
+            
+            <div class="model-card">
+                <i class="fa-solid fa-arrows-rotate model-icon"></i>
+                <h3>Consumables</h3>
+                <div class="model-price">$30 - $50 / yr</div>
+                <p class="model-desc">Replacement conductive gel pads. Creates steady LTV (Lifetime Value).</p>
+                <div class="margin-badge">High Frequency</div>
+            </div>
+
+            <div class="model-card">
+                <i class="fa-solid fa-mobile-screen-button model-icon"></i>
+                <h3>Data & App</h3>
+                <div class="model-price">Freemium</div>
+                <p class="model-desc">Premium reports for pain trends & physical therapy integration.</p>
+                <div class="margin-badge">Retention Tool</div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <h4>Go-to-Market Strategy:</h4>
+            <ul style="margin-top: 10px; margin-left: 20px; font-size: 18px; color: var(--text-dark);">
+                <li><strong>DTC First:</strong> High margin sales via Website & Amazon.</li>
+                <li><strong>HSA/FSA Eligible:</strong> Allowing US customers to use pre-tax dollars (effectively a ~30% discount).</li>
+                <li><strong>Clinical Partnership:</strong> Recommendation by Physical Therapists as "Home Care" maintenance.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="slide-header">
+        <div class="slide-title">Appendix: Detailed Competition</div>
+        <div class="slide-subtitle">Data supporting our positioning matrix. <span style="color: var(--text-light);">For reference and due diligence.</span></div>
+    </div>
+    <div class="slide-content">
+        <div class="table-container">
+            <table class="appendix-table">
+                <thead>
+                    <tr>
+                        <th>Brand / Product</th>
+                        <th>Type</th>
+                        <th>Est. Price</th>
+                        <th>Limitations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: bold; color: var(--primary);">NervEase™</td>
+                        <td>TENS + PBM</td>
+                        <td>$199 - $249</td>
+                        <td>(Our Solution)</td>
+                    </tr>
+                    <tr>
+                        <td>Kineon MOVE+</td>
+                        <td>PBM (Laser/LED)</td>
+                        <td>$499+</td>
+                        <td>Expensive, no immediate sensation of relief.</td>
+                    </tr>
+                    <tr>
+                        <td>OSKA Pulse</td>
+                        <td>PEMF</td>
+                        <td>$399+</td>
+                        <td>Very expensive, completely sensation-free (user doubt).</td>
+                    </tr>
+                    <tr>
+                        <td>Quell 2.0</td>
+                        <td>Wearable TENS</td>
+                        <td>~$250</td>
+                        <td>TENS only, requires expensive electrode subscription.</td>
+                    </tr>
+                    <tr>
+                        <td>iReliev Wireless</td>
+                        <td>TENS + EMS</td>
+                        <td>$150+</td>
+                        <td>Focuses on muscle training (EMS), not tissue repair.</td>
+                    </tr>
+                    <tr>
+                        <td>Omron Max Power</td>
+                        <td>Standard TENS</td>
+                        <td>~$60</td>
+                        <td>Basic tech, strictly temporary relief.</td>
+                    </tr>
+                    <tr>
+                        <td>ActiPatch</td>
+                        <td>EMP Loop</td>
+                        <td>$30</td>
+                        <td>Disposable/Consumable model, limited lifespan.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
